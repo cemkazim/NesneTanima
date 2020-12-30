@@ -15,6 +15,7 @@ if nargout
 else
     gui_mainfcn(gui_State, varargin{:});
 end
+imagePath = ''
 function GUI_NIT_OpeningFcn(hObject, ~, handles, varargin)
 handles.output = hObject;
 guidata(hObject, handles);
@@ -28,35 +29,23 @@ function load_image_Callback(~, ~, ~)
        
     else
        global c_image; 
-      c_image=strcat(pathname,filename);     
+      c_image=strcat(pathname,filename);
+      axes(handles.pick_image);
       imshow(c_image);
-      disp(c_image)
-    
+      imagePath = filename;
     end
-function detect_ball_Callback(~, ~, handles)
+function detect_ball_Callback(~, ~, ~)
 global c_image;
-detecting_image(c_image, handles);
-
-function detecting_image(file_name, handles)
-rgb = imread(file_name);
-axes(handles.pick_image);
-imshow(rgb)
-d = imdistline;
-delete(d);
-gray_image = rgb2gray(rgb);
-imshow(gray_image);
-[centers, radii] = imfindcircles(rgb,[20 200],'ObjectPolarity','dark', ...
-    'Sensitivity',0.9,'Method','twostage');
-imshow(rgb);
-
-h = viscircles(centers,radii);
+detectBalls(c_image);
 
 function exit_button_Callback(~, ~, ~)
 closereq();
 
 function histogram_button_Callback(~, ~, handles)
-global c_image;
-I=imread(c_image);
-I=rgb2gray(I);
-imhist(I);
-axes(handles.histogram_image);
+if isequal(imagePath,0)
+    warndlg('Resim secimi yapmadiniz!');
+else
+    I=imread(imagePath);
+    I=rgb2gray(I);
+    imhist(I);
+

@@ -1,5 +1,5 @@
 %MAIN
-file_name='sample6.mp4';
+file_name='ball_1.jpg';
 motiontest(file_name);
 
 singleObject(file_name);
