@@ -47,7 +47,7 @@ detecting_image(pickedImage, handles)
 function detecting_image(file_name, ~)
 fprintf('objeler tanimlaniyor\n')
 rgb = imread(file_name);
-figure('Name','Nesne Tanima','NumberTitle','off');
+figure('Name','Measured Data','NumberTitle','off');
 fprintf('resim acildi\n')
 imshow(rgb)
 d = imdistline;
@@ -67,5 +67,5 @@ closereq();
 function histogrammed_ball_Callback(~, ~, ~)
 global pickedImage;
 pureImage = imread(pickedImage);
-figure('Name','Histogram Grafigi','NumberTitle','off');
+figure
 imhist(pureImage)
