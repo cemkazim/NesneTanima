@@ -32,7 +32,7 @@ function load_image_Callback(~, ~, handles)
 global pickedImage
 [filename, pathname] = uigetfile({'*.*';});
     if isequal(filename,0) || isequal(pathname,0)
-       warndlg('Bir resim secmediniz!')
+       warndlg('bir resim secimi yapilmadi!')
     else
       pickedImage = strcat(pathname,filename);
       imshow(pickedImage, 'Parent', handles.pick_image)
@@ -43,24 +43,28 @@ global pickedImage
 
 function detect_object_Callback(~, ~, handles)
 global pickedImage
-fprintf('resim secimi yapildi\n')
+fprintf('--- resim secimi yapildi ---\n')
 detecting_image(pickedImage, handles)
 
 function detecting_image(file_name, ~)
-fprintf('objeler tanimlaniyor\n')
+fprintf('--- resim olusturuluyor ---\n')
 rgb = imread(file_name);
 figure('Name', 'Tanimlanan Nesneler' ,'NumberTitle' ,'off');
-fprintf('resim acildi\n')
+fprintf('--- resim taraniyor ---\n')
 imshow(rgb, 'InitialMagnification', 'fit')
 d = imdistline;
 delete(d)
 gray_image = rgb2gray(rgb);
-fprintf('resimdeki objeler taniniyor\n')
+fprintf('--- resimdeki objeler taniniyor ---\n')
 imshow(gray_image, 'InitialMagnification', 'fit')
-[centers, radii] = imfindcircles(rgb, [20 200], 'ObjectPolarity', 'dark', 'Sensitivity' , 0.9, 'Method', 'twostage');
+[center1, radii1] = imfindcircles(rgb, [20 60], 'ObjectPolarity', 'dark', 'Sensitivity' , 0.9, 'Method', 'twostage');
+[center2, radii2] = imfindcircles(rgb, [61 120], 'ObjectPolarity', 'dark', 'Sensitivity' , 0.9, 'Method', 'twostage');
+[center3, radii3] = imfindcircles(rgb, [121 200], 'ObjectPolarity', 'dark', 'Sensitivity' , 0.9, 'Method', 'twostage');
 imshow(rgb, 'InitialMagnification', 'fit')
-fprintf('objeler tanimlandi\n')
-h = viscircles(centers, radii);
+fprintf('--- objeler tanimlandi ---\n')
+result1 = viscircles(center1, radii1, 'Color', 'r');
+result2 = viscircles(center2, radii2, 'Color', 'g');
+result3 = viscircles(center3, radii3, 'Color', 'p');
 
 function exit_button_Callback(~, ~, ~)
 closereq();
