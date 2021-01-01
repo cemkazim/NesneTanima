@@ -32,7 +32,7 @@ function load_image_Callback(~, ~, handles)
 global pickedImage
 [filename, pathname] = uigetfile({'*.*';});
     if isequal(filename,0) || isequal(pathname,0)
-       warndlg('Bir resim secmediniz!')
+       warndlg('Lutfen bir resim seciniz!')
     else
       pickedImage = strcat(pathname,filename);
       imshow(pickedImage, 'Parent', handles.pick_image)
@@ -49,16 +49,16 @@ detecting_image(pickedImage, handles)
 function detecting_image(file_name, ~)
 fprintf('objeler tanimlaniyor\n')
 rgb = imread(file_name);
-figure('Name', 'Tanimlanan Nesneler' ,'NumberTitle' ,'off');
+figure('Name', 'Nesne Tanima' ,'NumberTitle' ,'off');
 fprintf('resim acildi\n')
-imshow(rgb, 'InitialMagnification', 'fit')
+imshow(rgb)
 d = imdistline;
 delete(d)
 gray_image = rgb2gray(rgb);
 fprintf('resimdeki objeler taniniyor\n')
-imshow(gray_image, 'InitialMagnification', 'fit')
+imshow(gray_image)
 [centers, radii] = imfindcircles(rgb, [20 200], 'ObjectPolarity', 'dark', 'Sensitivity' , 0.9, 'Method', 'twostage');
-imshow(rgb, 'InitialMagnification', 'fit')
+imshow(rgb)
 fprintf('objeler tanimlandi\n')
 h = viscircles(centers, radii);
 
