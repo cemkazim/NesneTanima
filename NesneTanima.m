@@ -21,14 +21,14 @@ end
 function NesneTanima_OpeningFcn(hObject, ~, handles, varargin)
 handles.output = hObject;
 guidata(hObject, handles);
-set(handles.histogrammed_image,'Enable','off')
-set(handles.detect_object,'Enable','off')
+set(handles.histogrammed_image_button,'Enable','off')
+set(handles.detect_object_button,'Enable','off')
 set(handles.pick_an_image_text, 'Visible', 'on')
 
 function varargout = NesneTanima_OutputFcn(~, ~, handles) 
 varargout{1} = handles.output;
 
-function load_image_Callback(~, ~, handles)
+function load_image_button_Callback(~, ~, handles)
 global pickedImage
 [filename, pathname] = uigetfile({'*.*';});
     if isequal(filename,0) || isequal(pathname,0)
@@ -36,12 +36,12 @@ global pickedImage
     else
       pickedImage = strcat(pathname,filename);
       imshow(pickedImage, 'Parent', handles.pick_image)
-      set(handles.histogrammed_image,'Enable','on')
-      set(handles.detect_object,'Enable','on')
+      set(handles.histogrammed_image_button,'Enable','on')
+      set(handles.detect_object_button,'Enable','on')
       set(handles.pick_an_image_text, 'Visible', 'off')
     end
 
-function detect_object_Callback(~, ~, handles)
+function detect_object_button_Callback(~, ~, handles)
 global pickedImage
 fprintf('--- resim secimi yapildi ---\n')
 detecting_image(pickedImage, handles)
@@ -69,7 +69,7 @@ result3 = viscircles(center3, radii3, 'Color', 'p');
 function exit_button_Callback(~, ~, ~)
 closereq();
 
-function histogrammed_image_Callback(~, ~, ~)
+function histogrammed_image_button_Callback(~, ~, ~)
 global pickedImage;
 pureImage = imread(pickedImage);
 figure('Name','Histogram Grafigi','NumberTitle','off');
