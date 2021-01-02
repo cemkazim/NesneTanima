@@ -21,7 +21,7 @@ end
 function NesneTanima_OpeningFcn(hObject, ~, handles, varargin)
 handles.output = hObject;
 guidata(hObject, handles);
-set(handles.histogrammed_ball,'Enable','off')
+set(handles.histogrammed_image,'Enable','off')
 set(handles.detect_object,'Enable','off')
 set(handles.pick_an_image_text, 'Visible', 'on')
 
@@ -36,7 +36,7 @@ global pickedImage
     else
       pickedImage = strcat(pathname,filename);
       imshow(pickedImage, 'Parent', handles.pick_image)
-      set(handles.histogrammed_ball,'Enable','on')
+      set(handles.histogrammed_image,'Enable','on')
       set(handles.detect_object,'Enable','on')
       set(handles.pick_an_image_text, 'Visible', 'off')
     end
@@ -69,8 +69,8 @@ result3 = viscircles(center3, radii3, 'Color', 'p');
 function exit_button_Callback(~, ~, ~)
 closereq();
 
-function histogrammed_ball_Callback(~, ~, ~)
+function histogrammed_image_Callback(~, ~, ~)
 global pickedImage;
 pureImage = imread(pickedImage);
-figure('Name','Histogram','NumberTitle','off');
+figure('Name','Histogram Grafigi','NumberTitle','off');
 imhist(pureImage)
