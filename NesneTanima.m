@@ -1,5 +1,6 @@
 % Bu program bir Nesne Tanima uygulamasidir. Bu uygulama, Yapay Gorme ve Oruntu Tanimaya
 % Giris dersinin final odevi icin Cem Kazim Genel tarafindan yazilmistir.
+% Bu projenin gelistirilmesi 02.02.2021 tarihinde sonlandirilmistir.
 
 function varargout = NesneTanima(varargin)
 gui_Singleton = 1;
