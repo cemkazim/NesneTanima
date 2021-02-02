@@ -43,28 +43,16 @@ global pickedImage
 
 function detect_object_button_Callback(~, ~, handles)
 global pickedImage
-fprintf('--- resim secimi yapildi ---\n')
 detecting_image(pickedImage, handles)
 
 function detecting_image(file_name, ~)
-fprintf('--- resim olusturuluyor ---\n')
-rgb = imread(file_name);
+detectedImage = imread(file_name);
+nnet = alexnet;
 figure('Name', 'Tanimlanan Nesneler' ,'NumberTitle' ,'off');
-fprintf('--- resim taraniyor ---\n')
-imshow(rgb, 'InitialMagnification', 'fit')
-d = imdistline;
-delete(d)
-gray_image = rgb2gray(rgb);
-fprintf('--- resimdeki objeler taniniyor ---\n')
-imshow(gray_image, 'InitialMagnification', 'fit')
-[center1, radii1] = imfindcircles(rgb, [20 60], 'ObjectPolarity', 'dark', 'Sensitivity' , 0.9, 'Method', 'twostage');
-[center2, radii2] = imfindcircles(rgb, [61 120], 'ObjectPolarity', 'dark', 'Sensitivity' , 0.9, 'Method', 'twostage');
-[center3, radii3] = imfindcircles(rgb, [121 200], 'ObjectPolarity', 'dark', 'Sensitivity' , 0.9, 'Method', 'twostage');
-imshow(rgb, 'InitialMagnification', 'fit')
-fprintf('--- objeler tanimlandi ---\n')
-result1 = viscircles(center1, radii1, 'Color', 'r');
-result2 = viscircles(center2, radii2, 'Color', 'g');
-result3 = viscircles(center3, radii3, 'Color', 'p');
+image(detectedImage);
+picture = imresize(detectedImage, [227,227]);
+label = classify(nnet, picture);
+title(upper(char(label)));
 
 function exit_button_Callback(~, ~, ~)
 closereq();
